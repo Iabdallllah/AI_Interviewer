@@ -12,7 +12,7 @@ import base64
 
 app = FastAPI(title="AI Interviewer")
 
-groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 def extract_text_from_file(file: UploadFile) -> str:
     if not file or not file.filename:
         return ""
