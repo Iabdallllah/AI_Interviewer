@@ -264,7 +264,7 @@ async def get_live_ui():
                 <h2>Interview Setup</h2>
                 <div class="input-group">
                     <label>Job Description</label>
-                    <textarea id="jdInput" placeholder="e.g. Customer Service Advisor - German Speakers..."></textarea>
+                    <textarea id="jdInput" placeholder="ex. Customer Service Agent - AI Engineer..."></textarea>
                 </div>
                 <div class="input-group">
                     <label>Candidate CV (Optional PDF/TXT)</label>
