@@ -7,3 +7,4 @@ gTTS
 pypdf
 langchain-groq
 langgraph
+mangum
