@@ -10,7 +10,7 @@ Voxora leverages state-of-the-art Large Language Models (LLMs) and Speech-to-Tex
 
 ## Live Demo
 
-[Insert Your Live Deployment Link Here]
+[https://voxora.up.railway.app/]
 
 ---
 
