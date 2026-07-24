@@ -1,8 +1,10 @@
-# AI Voice Interviewer
+# Voxora
 
-An advanced real-time AI-powered interviewing platform designed to simulate professional HR and technical interviews.
+### *Your Personal AI Interview Coach.*
 
-The system leverages state-of-the-art Large Language Models (LLMs) and Speech-to-Text processing to conduct interactive voice interviews, dynamically adapting to the candidate's language, context, and required job description.
+An advanced real-time AI-powered interview coaching platform designed to simulate professional HR and technical interviews.
+
+Voxora leverages state-of-the-art Large Language Models (LLMs) and Speech-to-Text processing to deliver realistic mock interviews, helping candidates practice, improve their communication skills, and build confidence before real interviews.
 
 ---
 
@@ -12,72 +14,75 @@ The system leverages state-of-the-art Large Language Models (LLMs) and Speech-to
 
 ---
 
-## Key Features
+# Key Features
 
-### Dynamic Language Adaptation
+## Dynamic Language Adaptation
 
 Automatically detects the required language from the job description and conducts the interview accordingly.
 
-Supported examples:
+Supported languages include:
+
 - German
 - English
 - Arabic
 
 ---
 
-### Real-Time Voice Interaction
+## Real-Time Voice Interaction
 
-- Real-time voice-based communication.
-- Utilizes Web Audio API for responsive audio processing.
-- Provides synchronized Speech-to-Text and Text-to-Speech interaction with minimal latency.
+- Real-time voice-based conversations.
+- Responsive audio processing powered by the Web Audio API.
+- Low-latency Speech-to-Text and Text-to-Speech communication.
 
 ---
 
-### Context-Aware Generation
+## AI Interview Coaching
 
 Built with LangChain and LangGraph to:
 
-- Maintain conversation history.
-- Analyze uploaded CV files (PDF/TXT).
-- Generate interview questions based on:
-  - Candidate experience.
-  - Job description requirements.
-  - Interview context.
+- Maintain conversational context.
+- Analyze uploaded CVs (PDF/TXT).
+- Understand the target job description.
+- Generate personalized HR and technical interview questions.
+- Adapt follow-up questions based on candidate responses.
+- Simulate realistic interview scenarios.
 
 ---
 
-### Comprehensive Evaluation
+## Comprehensive Performance Evaluation
 
-At the end of the interview, the AI provides:
+After every interview session, Voxora provides:
 
 - Fluency assessment.
 - Grammar evaluation.
 - Communication analysis.
-- Professional suitability feedback.
-- Overall score out of 10.
+- Technical and behavioral feedback.
+- Strengths & improvement areas.
+- Overall interview score (out of 10).
 
 ---
 
-### Modern Enterprise UI
+## Modern Enterprise UI
 
-Features:
+Features include:
 
-- Clean glassmorphism design.
+- Glassmorphism interface.
 - Dynamic audio-reactive holographic orb.
-- Premium interactive interview experience.
+- Smooth conversational experience.
+- Responsive modern design.
 
 ---
 
 # Tech Stack
 
-## Backend Framework
+## Backend
 
 - FastAPI
 
-## AI / LLM Capabilities
+## AI & LLM
 
 - Groq API
-- Llama-3-70b-versatile
+- Llama-3-70B-Versatile
 
 ## AI Orchestration
 
@@ -86,11 +91,11 @@ Features:
 
 ## Speech Processing
 
-### Speech-to-Text (STT)
+### Speech-to-Text
 
 - Groq Whisper
 
-### Text-to-Speech (TTS)
+### Text-to-Speech
 
 - gTTS
 
@@ -99,8 +104,8 @@ Features:
 - HTML5
 - CSS3
 - JavaScript
-- Web Audio API
 - Streamlit
+- Web Audio API
 
 ---
 
@@ -111,18 +116,18 @@ hr_agent/
 │
 ├── app/
 │   ├── __init__.py
-│   ├── graph.py       # LangGraph state management and LLM prompts
-│   ├── main.py        # FastAPI server and core endpoints
-│   └── ui.py          # UI components and configurations
+│   ├── graph.py       # LangGraph workflow and interview logic
+│   ├── main.py        # FastAPI server and REST endpoints
+│   └── ui.py          # Streamlit UI
 │
-├── .env               # Environment variables (API Keys)
-├── requirements.txt   # Project dependencies
-└── README.md          # Documentation
+├── .env
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-# Installation & Setup
+# Installation
 
 ## Clone the Repository
 
@@ -134,7 +139,7 @@ cd hr_agent
 
 ---
 
-## Create and Activate Virtual Environment
+## Create a Virtual Environment
 
 ### Linux / macOS
 
@@ -164,7 +169,7 @@ pip install -r requirements.txt
 
 ## Configure Environment Variables
 
-Create a `.env` file in the project root:
+Create a `.env` file:
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
@@ -180,9 +185,9 @@ Start the FastAPI server:
 uvicorn app.main:app --reload
 ```
 
-The application will be available at:
+Open:
 
-```
+```text
 http://127.0.0.1:8000
 ```
 
@@ -190,30 +195,28 @@ http://127.0.0.1:8000
 
 # Usage
 
-1. Open the application in your browser.
-
-2. Click on "Configure" to enter:
-   - Target Job Description.
-   - Candidate CV file (PDF/TXT).
-
-3. Click "Start" to begin the interview.
-
-4. The AI interviewer will:
-   - Analyze the provided context.
-   - Generate relevant interview questions.
-   - Listen to candidate responses.
-   - Provide real-time feedback.
-
-5. Use the "Speak" button to record answers.
-
-6. Receive a final AI-generated evaluation report.
+1. Launch the application.
+2. Upload your CV (PDF/TXT).
+3. Paste the target Job Description.
+4. Start your mock interview.
+5. Answer questions using your microphone.
+6. Receive instant AI-powered feedback and a detailed evaluation report.
 
 ---
 
-# Future Improvements
+# Future Roadmap
 
-- Real-time emotion analysis.
-- Advanced voice cloning.
-- Multi-candidate comparison dashboard.
-- Interview analytics and reporting.
-- ATS platform integration.
+- Emotion and sentiment analysis.
+- AI voice personalization.
+- Interview history and progress tracking.
+- Multi-session analytics dashboard.
+- ATS integration.
+- Recruiter dashboard.
+- Personalized learning recommendations.
+- Interview difficulty levels.
+
+---
+
+## Why Voxora?
+
+Voxora is more than an AI interviewer—it's your personal interview coach. By combining conversational AI, voice interaction, and intelligent feedback, it helps candidates practice realistically, identify weaknesses, and walk into interviews with confidence.
