@@ -12,7 +12,10 @@ import base64
 
 app = FastAPI(title="AI Interviewer")
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+# تثبيت المفتاح مباشرة لحل مشكلة قراءته في البيئات السحابية
+GROQ_API_KEY = "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"
+groq_client = Groq(api_key=GROQ_API_KEY)
+
 def extract_text_from_file(file: UploadFile) -> str:
     if not file or not file.filename:
         return ""
@@ -181,54 +184,16 @@ async def get_live_ui():
 
             @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
 
-            /* Footer & Credits Styling */
             .credits-footer {
-                position: fixed;
-                bottom: 20px;
-                left: 0;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-                z-index: 40;
-                opacity: 0.4;
-                transition: opacity 0.3s ease;
-                pointer-events: auto;
+                position: fixed; bottom: 20px; left: 0; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 40; opacity: 0.4; transition: opacity 0.3s ease; pointer-events: auto;
             }
-            .credits-footer:hover {
-                opacity: 1;
-            }
-            .credits-text {
-                font-size: 12px;
-                color: var(--text-secondary);
-                letter-spacing: 0.5px;
-            }
-            .credits-text strong {
-                color: var(--text-primary);
-                font-weight: 600;
-            }
-            .social-links {
-                display: flex;
-                gap: 14px;
-            }
-            .social-links a {
-                color: var(--text-secondary);
-                text-decoration: none;
-                transition: color 0.2s ease, transform 0.2s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .social-links a:hover {
-                color: var(--text-primary);
-                transform: translateY(-2px);
-            }
-            .social-links svg {
-                width: 18px;
-                height: 18px;
-                fill: currentColor;
-            }
+            .credits-footer:hover { opacity: 1; }
+            .credits-text { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.5px; }
+            .credits-text strong { color: var(--text-primary); font-weight: 600; }
+            .social-links { display: flex; gap: 14px; }
+            .social-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease, transform 0.2s ease; display: flex; align-items: center; justify-content: center; }
+            .social-links a:hover { color: var(--text-primary); transform: translateY(-2px); }
+            .social-links svg { width: 18px; height: 18px; fill: currentColor; }
         </style>
     </head>
     <body>
@@ -270,7 +235,6 @@ async def get_live_ui():
             </div>
         </div>
 
-        <!-- Elegant Contact & Credits Footer -->
         <div class="credits-footer">
             <div class="credits-text">Crafted by <strong>Abdallah Khalifa</strong></div>
             <div class="social-links">
