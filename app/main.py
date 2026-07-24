@@ -10,9 +10,10 @@ import json
 import io
 import base64
 
-app = FastAPI(title="AI Interviewer")
+app = FastAPI(title="Voxora")
 
 groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
 def extract_text_from_file(file: UploadFile) -> str:
     if not file or not file.filename:
         return ""
@@ -56,7 +57,7 @@ async def get_live_ui():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AI Interviewer</title>
+        <title>Voxora - Your Personal AI Interview Coach</title>
         <style>
             :root {
                 --bg-main: #000000;
@@ -88,7 +89,24 @@ async def get_live_ui():
                 padding: 20px 30px; box-sizing: border-box; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
                 position: fixed; top: 0; left: 0; z-index: 50;
             }
-            .logo { font-size: 16px; font-weight: 600; letter-spacing: 0.5px; color: var(--text-primary); }
+            
+            .brand-container {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .logo { 
+                font-size: 20px; 
+                font-weight: 700; 
+                letter-spacing: 1px; 
+                color: var(--text-primary); 
+            }
+            .slogan {
+                font-size: 11px;
+                font-weight: 500;
+                color: var(--text-secondary);
+                letter-spacing: 0.5px;
+            }
             
             .setup-btn {
                 background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15);
@@ -234,7 +252,10 @@ async def get_live_ui():
     <body>
 
         <div class="header">
-            <div class="logo">AI Interviewer</div>
+            <div class="brand-container">
+                <div class="logo">Voxora</div>
+                <div class="slogan">Your Personal AI Interview Coach</div>
+            </div>
             <button class="setup-btn" onclick="toggleSettings(true)">Configure</button>
         </div>
 
