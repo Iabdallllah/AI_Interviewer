@@ -17,69 +17,64 @@
 
 # 📖 Project Overview
 
-**Voxora** is an advanced real-time AI-powered interview coaching platform designed to simulate professional HR and technical interviews. Built with state-of-the-art Large Language Models (LLMs) and Speech-to-Text processing, Voxora delivers realistic mock interviews that help candidates practice, improve their communication skills, and build confidence before real interviews.
+**Voxora** is an advanced real-time AI-powered interview coaching platform designed to simulate professional HR and technical interviews. The platform leverages state-of-the-art Large Language Models (LLMs), Speech-to-Text processing, and Text-to-Speech to deliver realistic mock interviews that help candidates practice, improve their communication skills, and build confidence before real interviews.
 
-The platform combines conversational AI, voice interaction, and intelligent feedback to create a personal interview coach that adapts to each candidate's CV and target job description.
+The system features a fully voice-based conversational interface where candidates interact with an AI interviewer through their microphone. The AI analyzes uploaded CVs, understands job descriptions, and conducts dynamic, adaptive interviews with personalized questions. After each session, candidates receive comprehensive performance evaluations including fluency assessment, grammar evaluation, communication analysis, technical/behavioral feedback, strengths & improvement areas, and an overall interview score out of 10.
 
 ---
 
 # ✨ Features
 
-### 🎯 Dynamic Language Adaptation
-Automatically detects the required language from the job description and conducts the interview accordingly.
-- **Supported Languages:** Arabic, English, German
-
-### 🎙️ Real-Time Voice Interaction
-- Real-time voice-based conversations
-- Responsive audio processing powered by Web Audio API
-- Low-latency Speech-to-Text and Text-to-Speech communication
-
-### 🤖 AI Interview Coaching
-Built with **LangChain** and **LangGraph** to:
-- Maintain conversational context throughout the interview
-- Analyze uploaded CVs (PDF/TXT)
-- Understand the target job description
-- Generate personalized HR and technical interview questions
-- Adapt follow-up questions based on candidate responses
-- Simulate realistic interview scenarios
-
-### 📊 Comprehensive Performance Evaluation
-After every interview session, Voxora provides:
-- Fluency assessment
-- Grammar evaluation
-- Communication analysis
-- Technical and behavioral feedback
-- Strengths & improvement areas
-- Overall interview score (out of 10)
-
-### 🎨 Modern Enterprise UI
-- Glassmorphism interface design
-- Dynamic audio-reactive holographic orb
-- Smooth conversational experience
-- Responsive modern design
-- Continuous conversation mode (no push-to-talk needed)
+* **Dynamic Language Adaptation** — Automatically detects required language from job descriptions and conducts interviews in Arabic, English, or German
+* **Real-Time Voice Interaction** — Low-latency speech-to-text (Groq Whisper) and text-to-speech (gTTS) with Web Audio API for responsive audio processing
+* **AI Interview Coaching** — Built with LangChain and LangGraph to maintain conversational context, analyze CVs (PDF/TXT), understand job descriptions, generate personalized questions, and adapt follow-ups based on responses
+* **Comprehensive Performance Evaluation** — Post-interview reports covering fluency, grammar, communication, technical/behavioral feedback, strengths, improvement areas, and overall score
+* **Modern Enterprise UI** — Glassmorphism interface with dynamic audio-reactive holographic orb, smooth conversational experience, and responsive design
+* **Continuous Conversation with VAD** — Voice Activity Detection for hands-free, natural dialogue flow with interruption support
+* **Chat History** — Scrollable conversation bubbles showing full interview transcript with speaker labels
 
 ---
 
 # 🛠️ Technologies Used
 
-| Category | Technologies |
-|----------|--------------|
-| **Backend** | FastAPI, Uvicorn |
-| **AI & LLM** | Groq API, Llama-3.3-70B-Versatile |
-| **AI Orchestration** | LangChain, LangGraph |
-| **Speech Processing** | Groq Whisper (STT), gTTS (TTS) |
-| **Frontend** | HTML5, CSS3, JavaScript, Web Audio API |
-| **Deployment** | Vercel (Serverless) |
-| **Language** | Python 3.11+ |
+## Backend
+* **FastAPI** — High-performance async web framework
+* **Uvicorn** — ASGI server for production deployment
+* **Mangum** — AWS Lambda adapter for serverless deployment
+
+## AI & LLM
+* **Groq API** — Ultra-fast inference for Llama-3.3-70B-Versatile
+* **Groq Whisper** — Speech-to-Text transcription (whisper-large-v3)
+* **gTTS** — Text-to-Speech synthesis with multi-language support
+
+## AI Orchestration
+* **LangChain** — LLM application framework
+* **LangGraph** — Stateful multi-agent workflow orchestration
+
+## Speech Processing
+* **Web Audio API** — Real-time audio capture, visualization, and playback
+* **MediaRecorder API** — Browser-based audio recording
+
+## Frontend
+* **Vanilla HTML5/CSS3/JavaScript** — No framework dependencies
+* **CSS Custom Properties** — Theming with glassmorphism effects
+* **CSS Animations** — Audio-reactive orb with gradient animations
+
+## Document Processing
+* **pypdf** — PDF text extraction from uploaded CVs
+* **python-multipart** — File upload handling
+
+## Deployment
+* **Vercel** — Serverless deployment (Hobby tier, free)
+* **GitHub** — Version control and CI/CD integration
 
 ---
 
 # ⚙️ Installation
 
 ## Prerequisites
-- Python 3.11+
-- Groq API Key (get one at [console.groq.com](https://console.groq.com))
+* Python 3.10+
+* Groq API key (free at [console.groq.com](https://console.groq.com))
 
 ## Local Setup
 
@@ -90,13 +85,16 @@ cd AI_Interviewer
 
 # Create virtual environment
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Linux/macOS
+# venv\Scripts\activate    # Windows
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Set environment variable
 export GROQ_API_KEY=your_groq_api_key_here
+# Or create .env file:
+echo "GROQ_API_KEY=your_groq_api_key_here" > .env
 
 # Run the application
 uvicorn app.main:app --reload
@@ -108,57 +106,49 @@ Open `http://127.0.0.1:8000` in your browser.
 
 # 🚀 Usage
 
-1. **Launch the application** - Run the server and open the web interface
-2. **Configure Interview** - Click "Configure" and enter:
-   - Job Description (paste the target role description)
-   - Candidate CV (optional - upload PDF or TXT)
-3. **Start Interview** - Press "Start" to begin the mock interview
-4. **Answer Questions** - Speak naturally; Voxora listens continuously and auto-detects when you finish
-5. **Receive Feedback** - Get instant AI-powered evaluation and detailed report
-
-### Keyboard Shortcuts
-- `Space` - Interrupt AI while it's speaking
-- `Escape` - End interview / Close settings
+1. **Launch** the application via `uvicorn app.main:app --reload`
+2. **Configure** — Click "Configure" button and enter:
+   - **Job Description** (required) — Paste the target role description
+   - **CV** (optional) — Upload PDF or TXT file
+3. **Start Interview** — Click "Start" to begin
+4. **Speak** — The AI interviewer asks the first question. Speak naturally; the system uses Voice Activity Detection (VAD) to auto-detect when you stop speaking
+5. **Interact** — Answer questions; the AI adapts follow-ups based on your responses
+6. **Interrupt** — Press **Space** anytime to interrupt the AI mid-speech
+7. **Complete** — After 8+ questions, receive a comprehensive evaluation report
 
 ---
 
 # 📸 Demo
 
-### Live Demo
-🔗 [https://voxorai.vercel.app](https://voxorai.vercel.app) *(Replace with your actual Vercel deployment URL)*
+> Add a screenshot or GIF of the interview interface here showing:
+> - The glassmorphism UI with holographic orb
+> - Chat history with speaker bubbles
+> - Configuration modal
 
-### Screenshots
-*Add screenshots here showing:*
-- Interview setup modal
-- Main interview interface with holographic orb
-- Chat history with message bubbles
-- Evaluation results
+*(Demo media to be added)*
 
 ---
 
 # 📈 Results
 
-- ✅ **Real-time voice conversation** with sub-second latency
-- ✅ **Multi-language support** (Arabic, English, German) with automatic detection
-- ✅ **CV-aware interviewing** - questions tailored to candidate's experience
-- ✅ **Context-aware follow-ups** using LangGraph state management
-- ✅ **Instant evaluation** with detailed scoring across multiple dimensions
-- ✅ **Serverless deployment** on Vercel (free tier, no credit card required)
-- ✅ **Continuous conversation** - no push-to-talk buttons needed
+* Successfully deployed on Vercel Hobby tier (free, no credit card required)
+* Sub-second Groq inference latency enabling real-time voice conversation
+* Accurate multi-language detection (Arabic, English, German) for TTS
+* End-to-end interview flow: CV parsing → JD analysis → adaptive questioning → evaluation
+* Serverless architecture with automatic scaling
 
 ---
 
 # 🔮 Future Improvements
 
-* **Emotion & Sentiment Analysis** - Detect candidate confidence, stress, enthusiasm
-* **AI Voice Personalization** - Multiple voice options, speed/pitch control
-* **Interview History & Progress Tracking** - Dashboard with session history and improvement trends
-* **Multi-Session Analytics** - Long-term skill development insights
-* **ATS Integration** - Export evaluation reports in ATS-compatible formats
-* **Recruiter Dashboard** - Team collaboration features for hiring managers
-* **Personalized Learning Recommendations** - AI-suggested resources based on weaknesses
-* **Interview Difficulty Levels** - Junior, Mid, Senior, Principal tracks
-* **Offline Mode** - Local model support via Ollama/LM Studio
+* **Emotion & Sentiment Analysis** — Detect candidate confidence, stress, and engagement from voice tone
+* **AI Voice Personalization** — Custom interviewer personas with distinct voices and styles
+* **Interview History & Progress Tracking** — Dashboard showing improvement over multiple sessions
+* **Multi-Session Analytics** — Comparative reports across different interview attempts
+* **ATS Integration** — Export evaluation reports in ATS-compatible formats
+* **Recruiter Dashboard** — Team view for hiring managers to review candidate sessions
+* **Personalized Learning Recommendations** — AI-generated study plans based on weak areas
+* **Interview Difficulty Levels** — Junior, Mid, Senior, and Expert modes with calibrated questions
 
 ---
 
@@ -175,21 +165,3 @@ For more information about the challenge, training programs, and upcoming batche
 # 📄 License
 
 This project is shared for educational and portfolio purposes.
-
----
-
-# 🔗 Connect
-
-<div align="center">
-  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdallllah)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/iabdallllah)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:abdallah.khalifa@proton.me)
-
-</div>
-
----
-
-<div align="center">
-  <sub>Built with ❤️ by <strong>Abdallah Ahmed Khalifa</strong> for the <a href="https://www.tipshindawi.com/">Tips Hindawi Challenge 2026</a></sub>
-</div>
