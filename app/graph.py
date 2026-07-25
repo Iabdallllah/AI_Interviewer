@@ -9,26 +9,61 @@ class InterviewState(TypedDict):
     job_description: str
     candidate_cv: str
     messages: List[Dict[str, str]]
+    persona: str
+    difficulty: str
+    length: str
 
 def interviewer_node(state: InterviewState):
     jd = state["job_description"]
     cv = state["candidate_cv"]
     messages = state.get("messages", [])
+    persona = state.get("persona", "general_hr")
+    difficulty = state.get("difficulty", "medium")
+    length = state.get("length", "medium")
     
-    system_prompt = f"""You are a professional, friendly, and senior HR Interviewer conducting a live voice interview.
+    if length == "short":
+        target_questions = 4
+    elif length == "long":
+        target_questions = 10
+    else:
+        target_questions = 7
+        
+    ai_msg_count = sum(1 for m in messages if m.get("role") == "ai")
+    
+    if persona == "technical_concepts":
+        persona_behavior = "You are a Senior Technical Interviewer. Focus on software engineering concepts, system design, and problem-solving logic. No exact code dictation."
+    elif persona == "linguistic_assessment":
+        persona_behavior = "You are a strict Language Evaluator. Conduct the interview strictly in the language implied by the JD. Assess fluency, grammar, and vocabulary."
+    elif persona == "stress_test":
+        persona_behavior = "You are a Stress Interviewer. Test how the candidate handles pressure, ambiguity, and strict deadlines."
+    elif persona == "executive_stakeholder":
+        persona_behavior = "You are a Non-Technical Executive. Focus on ROI, business impact, and high-level strategy."
+    else:
+        persona_behavior = "You are a Professional HR Interviewer. Focus on behavioral questions, cultural fit, and soft skills."
+
+    difficulty_prompt = f"The difficulty level is {difficulty.upper()}. Adjust the complexity and depth of your questions."
+
+    if ai_msg_count >= target_questions:
+        # قاعدة النهاية: تقييم لفظي سريع
+        conclusion_rule = "THIS IS THE FINAL MESSAGE. Do NOT ask any more questions. Give a brief VERBAL EVALUATION (max 3 sentences) summarizing their performance, giving a score out of 10, and thanking them. YOU MUST APPEND THE EXACT TEXT `[INTERVIEW_CONCLUDED]` at the very end of your response."
+    else:
+        # قاعدة الأسئلة: تعقيب بكلمتين فقط
+        conclusion_rule = f"This is question {ai_msg_count + 1} out of {target_questions}. CRITICAL: Acknowledge the candidate's previous answer using ONLY 2 TO 4 WORDS (e.g., 'Sehr gut.', 'Understood.', 'Great point.'). DO NOT explain or comment further. IMMEDIATELY after those 2-4 words, ask exactly ONE short, direct question."
+
+    system_prompt = f"""{persona_behavior}
+    
+    {difficulty_prompt}
+    
     Job Description:
     {jd}
     
     Candidate's CV:
     {cv}
     
-    CRITICAL RULES FOR LIVE VOICE CONVERSATION:
-    1. **STARTING LANGUAGE:** Analyze the Job Description. Start the interview naturally in the language required by the role (e.g., Arabic, English, French, German). Always match the candidate's language dynamically during the conversation.
-    2. **MODERATE RESPONSE LENGTH (CRITICAL):** You are in a real-time voice call. Your responses must be balanced—not too long and boring, but not too short and robotic. 
-       - Aim for 2 to 3 natural sentences (around 20 to 40 words).
-       - Acknowledge the candidate's previous answer smoothly, then ask ONE clear, relevant question.
-    3. **INTERVIEW FLOW:** Ask one question at a time. Keep the tone conversational, professional, and engaging.
-    4. **FINAL EVALUATION:** Ask at least 8 questions total before ending. When concluding, provide a concise evaluation of their communication skills and professional suitability with a score out of 10.
+    CRITICAL RULES:
+    1. **STRICT LANGUAGE MATCHING:** You MUST speak in the EXACT SAME language as the Job Description.
+    2. **EXTREME CONCISENESS:** DO NOT generate long paragraphs. Keep it short and engaging.
+    3. {conclusion_rule}
     """
     
     formatted_messages = [("system", system_prompt)]
