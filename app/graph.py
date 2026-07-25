@@ -41,14 +41,15 @@ def interviewer_node(state: InterviewState):
     else:
         persona_behavior = "You are a Professional HR Interviewer. Focus on behavioral questions, cultural fit, and soft skills."
 
-    difficulty_prompt = f"The difficulty level is {difficulty.upper()}. Adjust the complexity and depth of your questions."
+    difficulty_prompt = f"The difficulty level is {difficulty.upper()}. Adjust the complexity and depth of your questions accordingly."
 
-    if ai_msg_count >= target_questions:
-        # قاعدة النهاية: تقييم لفظي سريع
-        conclusion_rule = "THIS IS THE FINAL MESSAGE. Do NOT ask any more questions. Give a brief VERBAL EVALUATION (max 3 sentences) summarizing their performance, giving a score out of 10, and thanking them. YOU MUST APPEND THE EXACT TEXT `[INTERVIEW_CONCLUDED]` at the very end of your response."
+    # فصل منطق أول سؤال عن باقي المقابلة
+    if ai_msg_count == 0:
+        flow_rule = "This is the VERY FIRST message of the interview. Welcome the candidate naturally, briefly introduce the interview, and ask the FIRST question. DO NOT acknowledge any previous input because the candidate hasn't spoken yet. Keep your message natural and moderate in length (around 20-35 words)."
+    elif ai_msg_count >= target_questions:
+        flow_rule = "THIS IS THE FINAL MESSAGE. Do NOT ask any more questions. Give a brief VERBAL EVALUATION (max 3 sentences) summarizing their performance, giving a score out of 10, and thanking them. YOU MUST APPEND THE EXACT TEXT `[INTERVIEW_CONCLUDED]` at the very end of your response."
     else:
-        # قاعدة الأسئلة: تعقيب بكلمتين فقط
-        conclusion_rule = f"This is question {ai_msg_count + 1} out of {target_questions}. CRITICAL: Acknowledge the candidate's previous answer using ONLY 2 TO 4 WORDS (e.g., 'Sehr gut.', 'Understood.', 'Great point.'). DO NOT explain or comment further. IMMEDIATELY after those 2-4 words, ask exactly ONE short, direct question."
+        flow_rule = f"This is question {ai_msg_count + 1} out of {target_questions}. Acknowledge the candidate's previous answer naturally in one short sentence. Then, ask EXACTLY ONE clear, relevant question. Keep your total response natural, conversational, and moderate in length (around 20 to 40 words). Do NOT be overly brief, but avoid long monologues."
 
     system_prompt = f"""{persona_behavior}
     
@@ -62,8 +63,9 @@ def interviewer_node(state: InterviewState):
     
     CRITICAL RULES:
     1. **STRICT LANGUAGE MATCHING:** You MUST speak in the EXACT SAME language as the Job Description.
-    2. **EXTREME CONCISENESS:** DO NOT generate long paragraphs. Keep it short and engaging.
-    3. {conclusion_rule}
+    2. **NATURAL & CONVERSATIONAL:** Speak naturally like a real human interviewer.
+    3. **NO IN-VOICE EVALUATION YET:** Never give the candidate a score or evaluate them verbally until the very end of the interview.
+    4. {flow_rule}
     """
     
     formatted_messages = [("system", system_prompt)]
