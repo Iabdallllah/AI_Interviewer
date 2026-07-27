@@ -1,8 +1,13 @@
+import os
+from dotenv import load_dotenv
 from typing import TypedDict, List, Dict
 from langgraph.graph import StateGraph, END
 from langchain_groq import ChatGroq
-import os
 
+# تحميل المتغيرات قبل تشغيل LangChain
+load_dotenv(override=True)
+import os
+print("My current Groq Key starts with:", str(os.environ.get("GROQ_API_KEY"))[:12])
 llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0.3)
 
 class InterviewState(TypedDict):
