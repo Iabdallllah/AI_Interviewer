@@ -653,3 +653,5 @@ async def voice_chat_endpoint(
     except Exception as e:
         traceback.print_exc()  
         raise HTTPException(status_code=500, detail=str(e))
+from mangum import Mangum
+handler = Mangum(app)
