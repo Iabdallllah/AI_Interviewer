@@ -1,10 +1,11 @@
+fastapi
 uvicorn
 pydantic
 python-multipart
+python-dotenv
 groq
-gTTS
-pypdf
 langchain-groq
 langgraph
+gTTS
+pypdf
 mangum
-python-dotenv
