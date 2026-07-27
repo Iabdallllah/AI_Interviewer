@@ -1,15 +1,29 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
-from fastapi.responses import HTMLResponse
-from typing import Optional
-from app.graph import interview_app
-from groq import Groq
-from gtts import gTTS
 import os
 import json
 import io
 import base64
+import traceback
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+from typing import Optional
+from app.graph import interview_app
+from groq import Groq
+from gtts import gTTS
 
 app = FastAPI(title="Voxora")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
@@ -34,7 +48,6 @@ def extract_text_from_file(file: UploadFile) -> str:
         return ""
 
 def text_to_speech_base64(text: str) -> str:
-    # إزالة التاج السري قبل النطق
     clean_text = text.replace("[INTERVIEW_CONCLUDED]", "").strip()
     text_lower = clean_text.lower()
     
@@ -576,7 +589,9 @@ async def start_interview(
         result = interview_app.invoke(current_state)
         ai_response = result["messages"][-1]["content"]
         return {"ai_message": ai_response, "updated_messages": result["messages"], "audio_base64": text_to_speech_base64(ai_response)}
+    
     except Exception as e:
+        traceback.print_exc()  
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/voice-chat")
@@ -634,5 +649,7 @@ async def voice_chat_endpoint(
         ai_response = result["messages"][-1]["content"]
         
         return {"user_transcription": user_text, "ai_message": ai_response, "updated_messages": result["messages"], "audio_base64": text_to_speech_base64(ai_response)}
+    
     except Exception as e:
+        traceback.print_exc()  
         raise HTTPException(status_code=500, detail=str(e))
