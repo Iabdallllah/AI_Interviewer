@@ -1,4 +1,3 @@
-fastapi
 uvicorn
 pydantic
 python-multipart
@@ -8,3 +7,4 @@ pypdf
 langchain-groq
 langgraph
 mangum
+python-dotenv
