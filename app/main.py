@@ -11,7 +11,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
-from app.graph import interview_app
+from .graph import interview_app
 from groq import Groq
 from gtts import gTTS
 
