@@ -1,0 +1,28 @@
+import os
+import gradio as gr
+from groq import Groq
+
+# تهيئة عميل Groq باستخدام المفتاح السري
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
+def interview_chat(message, history):
+    messages = [{"role": "system", "content": "You are a professional AI interviewer conducting a mock technical interview."}]
+    for human, assistant in history:
+        messages.append({"role": "user", "content": human})
+        messages.append({"role": "assistant", "content": assistant})
+    messages.append({"role": "user", "content": message})
+    
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=messages
+    )
+    return response.choices[0].message.content
+
+demo = gr.ChatInterface(
+    fn=interview_chat,
+    title="AI Voice Interviewer",
+    description="An advanced AI-powered interviewing platform designed to simulate professional HR and technical interviews."
+)
+
+if __name__ == "__main__":
+    demo.launch()
